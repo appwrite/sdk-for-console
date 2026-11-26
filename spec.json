@@ -11002,7 +11002,7 @@
                 "parameters": [
                     {
                         "name": "queries",
-                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: monitorId, name, status, type, resourceType, resourceId, metric, resolvedAt, search",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: monitorId, name, status, type, resourceType, resourceId, metric, resolvedAt, severity, acknowledgedAt, escalationId, search",
                         "required": false,
                         "schema": {
                             "type": "array",
@@ -11148,7 +11148,7 @@
                                     "acknowledged": {
                                         "description": "Whether the alert is acknowledged. False undoes an acknowledgement.",
                                         "type": "boolean",
-                                        "example": false
+                                        "example": true
                                     }
                                 },
                                 "required": [
@@ -60009,7 +60009,7 @@
                 "tags": [
                     "monitors"
                 ],
-                "description": "Get a list of the project's monitors of every type. Use queries to filter by type, resource, metric or status, and `Query.search('search', term)` to search monitor IDs, names, metrics and resources.",
+                "description": "Get a list of the project's monitors of every type. Use queries to filter by type, resource, severity or status, and `Query.search('search', term)` to search monitor IDs, names, metrics and resources.",
                 "responses": {
                     "200": {
                         "description": "Monitors List",
@@ -60049,7 +60049,7 @@
                 "parameters": [
                     {
                         "name": "queries",
-                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, type, resourceType, resourceId, metric, enabled, severity, status, evaluatedAt, triggeredAt, search",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, type, resourceType, resourceId, enabled, severity, escalationId, status, evaluatedAt, triggeredAt, search",
                         "required": false,
                         "schema": {
                             "type": "array",
@@ -60081,7 +60081,7 @@
                 "tags": [
                     "monitors"
                 ],
-                "description": "Create a usage monitor. It reads a usage metric of the project, or of one of its databases or buckets, on a schedule, and opens an alert when all its rules hold. Each alert fires the `monitors.[monitorId].alerts.[alertId].firing` event when it opens and `.resolved` when usage recovers, for project webhooks, functions and realtime, and notifies the organization's owners by email and in the console.",
+                "description": "Create a usage monitor. It reads a usage metric of the project, or of one of its databases, buckets, functions or sites, on a schedule, and opens an alert when all its rules hold. Each alert fires the `monitors.[monitorId].alerts.[alertId].create` event when it opens and `.update` when usage recovers, for project webhooks, functions and realtime, and notifies the confirmed members of the `notify` roles by email and in the console, or the steps of the escalation set by `escalationId`.",
                 "responses": {
                     "201": {
                         "description": "Monitor",
@@ -60137,6 +60137,9 @@
                                     "rules": {
                                         "description": "Rules that must all hold for the monitor to fire, as query strings generated with the Query class: one comparing a usage metric, named as the usage endpoints name it (such as `network.outbound` or `databases.operations.reads`), with a threshold in the metric's unit (bytes for storage and bandwidth, MB-seconds for GB-hours, a count otherwise), and optionally `equal` rules on `resourceType` and `resourceId` to watch one database, bucket, function or site instead of the whole project.",
                                         "type": "array",
+                                        "example": [
+                                            "{\"method\":\"greaterThan\",\"attribute\":\"network.outbound\",\"values\":[5000000000]}"
+                                        ],
                                         "items": {
                                             "type": "string"
                                         }
@@ -60145,26 +60148,29 @@
                                         "description": "Seconds a counter metric is summed over, between 60 and 2592000. Gauges compare their latest value.",
                                         "type": "integer",
                                         "default": 3600,
-                                        "example": 60,
+                                        "example": 3600,
                                         "format": "int32"
                                     },
                                     "cooldown": {
                                         "description": "Minimum seconds between two team notifications of this monitor firing, between 300 and 2592000. Events fire on every change between firing and resolved regardless.",
                                         "type": "integer",
                                         "default": 3600,
-                                        "example": 300,
+                                        "example": 1800,
                                         "format": "int32"
                                     },
                                     "enabled": {
                                         "description": "Set to false to create the monitor without evaluating it.",
                                         "type": "boolean",
                                         "default": true,
-                                        "example": false
+                                        "example": true
                                     },
                                     "notify": {
                                         "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Defaults to owners; pass an empty list to rely on the alert events alone.",
                                         "type": "array",
                                         "default": [
+                                            "owner"
+                                        ],
+                                        "example": [
                                             "owner"
                                         ],
                                         "items": {
@@ -60175,7 +60181,44 @@
                                         "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it, such as a push that rings through silent mode.",
                                         "type": "string",
                                         "default": "warning",
-                                        "example": "info"
+                                        "example": "info",
+                                        "title": "MonitorSeverity",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "info"
+                                                ],
+                                                "title": "info"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "warning"
+                                                ],
+                                                "title": "warning"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "error"
+                                                ],
+                                                "title": "error"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "critical"
+                                                ],
+                                                "title": "critical"
+                                            }
+                                        ]
+                                    },
+                                    "escalationId": {
+                                        "description": "ID of an escalation of the organization that notifies the team of this monitor's alerts step by step, until a member acknowledges the alert or it resolves. When set, `notify` is not used. Leave empty to notify the `notify` roles once.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "<ESCALATION_ID>"
                                     }
                                 },
                                 "required": [
@@ -60190,7 +60233,7 @@
             }
         },
         "\/monitors\/usage\/{monitorId}": {
-            "put": {
+            "patch": {
                 "summary": "Update usage monitor",
                 "operationId": "monitorsUpdateUsageMonitor",
                 "tags": [
@@ -60260,34 +60303,40 @@
                                     "rules": {
                                         "description": "Rules that must all hold for the monitor to fire, as query strings generated with the Query class: one comparing a usage metric, named as the usage endpoints name it (such as `network.outbound` or `databases.operations.reads`), with a threshold in the metric's unit (bytes for storage and bandwidth, MB-seconds for GB-hours, a count otherwise), and optionally `equal` rules on `resourceType` and `resourceId` to watch one database, bucket, function or site instead of the whole project. Replaces the current rules.",
                                         "type": "array",
+                                        "example": [
+                                            "{\"method\":\"greaterThan\",\"attribute\":\"network.outbound\",\"values\":[5000000000]}"
+                                        ],
                                         "items": {
                                             "type": "string"
                                         },
                                         "nullable": true
                                     },
                                     "window": {
-                                        "description": "Seconds a counter metric is summed over, between 60 and 2592000.",
+                                        "description": "Seconds a counter metric is summed over, between 60 and 2592000. Gauges compare their latest value.",
                                         "type": "integer",
-                                        "example": 60,
+                                        "example": 3600,
                                         "format": "int32",
                                         "nullable": true
                                     },
                                     "cooldown": {
                                         "description": "Minimum seconds between two team notifications of this monitor firing, between 300 and 2592000. Events fire on every change between firing and resolved regardless.",
                                         "type": "integer",
-                                        "example": 300,
+                                        "example": 1800,
                                         "format": "int32",
                                         "nullable": true
                                     },
                                     "enabled": {
                                         "description": "Whether the monitor is evaluated.",
                                         "type": "boolean",
-                                        "example": false,
+                                        "example": true,
                                         "nullable": true
                                     },
                                     "notify": {
-                                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Defaults to owners; pass an empty list to rely on the alert events alone.",
+                                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Pass an empty list to rely on the alert events alone; pass null or omit to keep the current roles.",
                                         "type": "array",
+                                        "example": [
+                                            "owner"
+                                        ],
                                         "items": {
                                             "type": "string"
                                         },
@@ -60297,6 +60346,43 @@
                                         "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it, such as a push that rings through silent mode. Omit to keep the current one.",
                                         "type": "string",
                                         "example": "info",
+                                        "title": "MonitorSeverity",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "info"
+                                                ],
+                                                "title": "info"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "warning"
+                                                ],
+                                                "title": "warning"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "error"
+                                                ],
+                                                "title": "error"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "critical"
+                                                ],
+                                                "title": "critical"
+                                            }
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "escalationId": {
+                                        "description": "ID of an escalation of the organization that notifies the team of this monitor's alerts step by step, until a member acknowledges the alert or it resolves. When set, `notify` is not used. Pass an empty string to go back to the `notify` roles; pass null or omit to keep the current one.",
+                                        "type": "string",
+                                        "example": "<ESCALATION_ID>",
                                         "nullable": true
                                     }
                                 }
@@ -71700,7 +71786,7 @@
                     },
                     {
                         "name": "queries",
-                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: monitorId, name, status, type, resourceType, resourceId, metric, resolvedAt, search",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: monitorId, name, status, type, resourceType, resourceId, metric, resolvedAt, severity, acknowledgedAt, escalationId, search",
                         "required": false,
                         "schema": {
                             "type": "array",
@@ -71796,7 +71882,7 @@
                 "tags": [
                     "organizations"
                 ],
-                "description": "Acknowledge one of the organization's firing alerts, or undo that. Everyone who can read the alert sees who acknowledged it and when; it keeps firing until its monitor recovers. You can acknowledge the alerts you can read: a project's when your role reads that project's alerts, and budget alerts when it reads billing.",
+                "description": "Acknowledge one of the organization's firing alerts, or undo that. Everyone who can read the alert sees who acknowledged it and when; it keeps firing until its monitor recovers. You can acknowledge the alerts you can read: a project's when your role reads that project's alerts, and budget alerts when it reads billing. A credential acting for you, such as an OAuth2 app's access token, also needs the `alerts.write` scope.",
                 "responses": {
                     "200": {
                         "description": "Alert",
@@ -71816,7 +71902,10 @@
                     "rate-limit": 0,
                     "rate-time": 3600,
                     "rate-key": "url:{url},ip:{ip}",
-                    "scope": "projects.read",
+                    "scope": [
+                        "projects.read",
+                        "alerts.write"
+                    ],
                     "platforms": [
                         "console"
                     ],
@@ -73250,7 +73339,7 @@
                     },
                     {
                         "name": "queries",
-                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, type, resourceType, resourceId, metric, enabled, severity, status, evaluatedAt, triggeredAt, search",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, type, resourceType, resourceId, enabled, severity, escalationId, status, evaluatedAt, triggeredAt, search",
                         "required": false,
                         "schema": {
                             "type": "array",
@@ -73337,6 +73426,17 @@
                             "example": "<MONITOR_ID>"
                         },
                         "in": "path"
+                    },
+                    {
+                        "name": "projectId",
+                        "description": "ID of the project the monitor belongs to, as a monitor ID is unique within its project only. Leave empty for an organization monitor, such as a budget monitor, or the oldest monitor of the organization with that ID.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "<PROJECT_ID>",
+                            "default": ""
+                        },
+                        "in": "query"
                     }
                 ]
             }
@@ -129980,6 +130080,2150 @@
                     }
                 }
             }
+        },
+        "\/monitors\/dns": {
+            "post": {
+                "summary": "Create DNS monitor",
+                "operationId": "monitorsCreateDnsMonitor",
+                "tags": [
+                    "monitors"
+                ],
+                "description": "Create a DNS monitor. It asks a resolver for a domain's records of one type on its own interval, and opens an alert when the resolver fails, or when its rules match the answers, by default when there is no such record. Each alert fires the `monitors.[monitorId].alerts.[alertId].create` event when it opens and `.update` when a check passes again, for project webhooks, functions and realtime, and notifies the organization's members by email and in the console.",
+                "responses": {
+                    "201": {
+                        "description": "Monitor",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/monitor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": null,
+                    "demo": "monitors\/create-dns-monitor.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "monitors.write",
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "monitorId": {
+                                        "description": "Monitor ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.",
+                                        "type": "string",
+                                        "example": "<MONITOR_ID>"
+                                    },
+                                    "name": {
+                                        "description": "Monitor name. Max length: 128 chars.",
+                                        "type": "string",
+                                        "example": "<NAME>"
+                                    },
+                                    "domain": {
+                                        "description": "Domain to query, such as `example.com`.",
+                                        "type": "string",
+                                        "example": "example.com"
+                                    },
+                                    "record": {
+                                        "description": "Record type to query: `A`, `AAAA`, `CNAME`, `MX`, `TXT` or `NS`. Defaults to `A`.",
+                                        "type": "string",
+                                        "default": "A",
+                                        "example": "A",
+                                        "title": "MonitorRecord",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "A"
+                                                ],
+                                                "title": "A"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "AAAA"
+                                                ],
+                                                "title": "AAAA"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "CNAME"
+                                                ],
+                                                "title": "CNAME"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "MX"
+                                                ],
+                                                "title": "MX"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "TXT"
+                                                ],
+                                                "title": "TXT"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "NS"
+                                                ],
+                                                "title": "NS"
+                                            }
+                                        ]
+                                    },
+                                    "resolver": {
+                                        "description": "Resolver to query, as an IP address with an optional port, such as `1.1.1.1` or `[2606:4700:4700::1111]:53`. Defaults to the server's DNS resolver.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "1.1.1.1"
+                                    },
+                                    "rules": {
+                                        "description": "Rules that describe the failing state, as query strings generated with the Query class. The monitor fires when they match. Transport failures, such as timeouts, DNS failures, refused connections and denied targets, always fire. Variables: `answer` (the first record returned, compared lowercased without the trailing dot), `answers` (number of records returned), `latency` (milliseconds the check took). Operators: `equal`, `notEqual`, `lessThan`, `lessThanEqual`, `greaterThan`, `greaterThanEqual`, `between`, `notBetween`. `answer` takes `equal` and `notEqual` only. Combine rules with `or` and `and`; top-level rules must all match. Without rules it fires when the resolver returns no answers.",
+                                        "type": "array",
+                                        "default": [],
+                                        "example": [
+                                            "{\"method\":\"or\",\"values\":[{\"method\":\"equal\",\"attribute\":\"answers\",\"values\":[0]},{\"method\":\"greaterThan\",\"attribute\":\"latency\",\"values\":[1000]}]}"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "interval": {
+                                        "description": "Seconds between two checks, between 1 and 2592000. The scheduler runs on a one second tick, so one second is the shortest interval. Defaults to 60, or to the shortest interval your plan allows when that is longer. Reads back raised to your plan's minimum interval when the plan no longer allows it.",
+                                        "type": "integer",
+                                        "example": 60,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "timeout": {
+                                        "description": "Seconds a check may take before it fails, between 1 and 60, and no longer than the interval.",
+                                        "type": "integer",
+                                        "default": 10,
+                                        "example": 10,
+                                        "format": "int32"
+                                    },
+                                    "cooldown": {
+                                        "description": "Minimum seconds between two team notifications of this monitor firing, between 300 and 2592000. Events fire on every change between firing and resolved regardless.",
+                                        "type": "integer",
+                                        "default": 3600,
+                                        "example": 300,
+                                        "format": "int32"
+                                    },
+                                    "enabled": {
+                                        "description": "Set to false to create the monitor without checking it.",
+                                        "type": "boolean",
+                                        "default": true,
+                                        "example": true
+                                    },
+                                    "notify": {
+                                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Defaults to owners; pass an empty list to rely on the alert events alone.",
+                                        "type": "array",
+                                        "default": [
+                                            "owner"
+                                        ],
+                                        "example": [
+                                            "owner"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "severity": {
+                                        "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it, such as a push that rings through silent mode.",
+                                        "type": "string",
+                                        "default": "warning",
+                                        "example": "info",
+                                        "title": "MonitorSeverity",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "info"
+                                                ],
+                                                "title": "info"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "warning"
+                                                ],
+                                                "title": "warning"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "error"
+                                                ],
+                                                "title": "error"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "critical"
+                                                ],
+                                                "title": "critical"
+                                            }
+                                        ]
+                                    },
+                                    "escalationId": {
+                                        "description": "ID of an escalation of the organization that notifies the team of this monitor's alerts step by step, until a member acknowledges the alert or it resolves. When set, `notify` is not used. Leave empty to notify the `notify` roles once.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "<ESCALATION_ID>"
+                                    }
+                                },
+                                "required": [
+                                    "monitorId",
+                                    "name",
+                                    "domain"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/monitors\/dns\/{monitorId}": {
+            "patch": {
+                "summary": "Update DNS monitor",
+                "operationId": "monitorsUpdateDnsMonitor",
+                "tags": [
+                    "monitors"
+                ],
+                "description": "Update a DNS monitor by its unique ID. Only the parameters passed change; the monitor's state, its last check and its open alert are kept. Passing `rules` replaces all of them.",
+                "responses": {
+                    "200": {
+                        "description": "Monitor",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/monitor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": null,
+                    "demo": "monitors\/update-dns-monitor.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "monitors.write",
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "monitorId",
+                        "description": "Monitor ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<MONITOR_ID>"
+                        },
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "Monitor name. Max length: 128 chars.",
+                                        "type": "string",
+                                        "example": "<NAME>",
+                                        "nullable": true
+                                    },
+                                    "domain": {
+                                        "description": "Domain to query, such as `example.com`.",
+                                        "type": "string",
+                                        "example": "example.com",
+                                        "nullable": true
+                                    },
+                                    "record": {
+                                        "description": "Record type to query: `A`, `AAAA`, `CNAME`, `MX`, `TXT` or `NS`.",
+                                        "type": "string",
+                                        "example": "A",
+                                        "title": "MonitorRecord",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "A"
+                                                ],
+                                                "title": "A"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "AAAA"
+                                                ],
+                                                "title": "AAAA"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "CNAME"
+                                                ],
+                                                "title": "CNAME"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "MX"
+                                                ],
+                                                "title": "MX"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "TXT"
+                                                ],
+                                                "title": "TXT"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "NS"
+                                                ],
+                                                "title": "NS"
+                                            }
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "resolver": {
+                                        "description": "Resolver to query, as an IP address with an optional port, such as `1.1.1.1` or `[2606:4700:4700::1111]:53`. Pass an empty string to use the server's DNS resolver.",
+                                        "type": "string",
+                                        "example": "1.1.1.1",
+                                        "nullable": true
+                                    },
+                                    "rules": {
+                                        "description": "Rules that describe the failing state, as query strings generated with the Query class. The monitor fires when they match. Transport failures, such as timeouts, DNS failures, refused connections and denied targets, always fire. Variables: `answer` (the first record returned, compared lowercased without the trailing dot), `answers` (number of records returned), `latency` (milliseconds the check took). Operators: `equal`, `notEqual`, `lessThan`, `lessThanEqual`, `greaterThan`, `greaterThanEqual`, `between`, `notBetween`. `answer` takes `equal` and `notEqual` only. Combine rules with `or` and `and`; top-level rules must all match. Without rules it fires when the resolver returns no answers. Replaces the current rules; an empty list restores the defaults.",
+                                        "type": "array",
+                                        "example": [
+                                            "{\"method\":\"or\",\"values\":[{\"method\":\"equal\",\"attribute\":\"answers\",\"values\":[0]},{\"method\":\"greaterThan\",\"attribute\":\"latency\",\"values\":[1000]}]}"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "interval": {
+                                        "description": "Seconds between two checks, between 1 and 2592000. The scheduler runs on a one second tick, so one second is the shortest interval. Reads back raised to your plan's minimum interval when the plan no longer allows it.",
+                                        "type": "integer",
+                                        "example": 60,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "timeout": {
+                                        "description": "Seconds a check may take before it fails, between 1 and 60, and no longer than the interval.",
+                                        "type": "integer",
+                                        "example": 10,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "cooldown": {
+                                        "description": "Minimum seconds between two team notifications of this monitor firing, between 300 and 2592000. Events fire on every change between firing and resolved regardless.",
+                                        "type": "integer",
+                                        "example": 300,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "enabled": {
+                                        "description": "Whether the monitor is checked.",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "notify": {
+                                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Pass an empty list to rely on the alert events alone.",
+                                        "type": "array",
+                                        "example": [
+                                            "owner"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "severity": {
+                                        "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it, such as a push that rings through silent mode.",
+                                        "type": "string",
+                                        "example": "info",
+                                        "title": "MonitorSeverity",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "info"
+                                                ],
+                                                "title": "info"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "warning"
+                                                ],
+                                                "title": "warning"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "error"
+                                                ],
+                                                "title": "error"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "critical"
+                                                ],
+                                                "title": "critical"
+                                            }
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "escalationId": {
+                                        "description": "ID of an escalation of the organization that notifies the team of this monitor's alerts step by step, until a member acknowledges the alert or it resolves. When set, `notify` is not used. Pass an empty string to go back to the `notify` roles.",
+                                        "type": "string",
+                                        "example": "<ESCALATION_ID>",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/monitors\/http": {
+            "post": {
+                "summary": "Create HTTP monitor",
+                "operationId": "monitorsCreateHttpMonitor",
+                "tags": [
+                    "monitors"
+                ],
+                "description": "Create an HTTP monitor. It requests a URL on its own interval, following redirects, and opens an alert when the request fails or when its rules match the response, by default a status outside 2xx or the certificate of an HTTPS URL about to expire. The response body is discarded as it arrives. Each alert fires the `monitors.[monitorId].alerts.[alertId].create` event when it opens and `.update` when a check passes again, for project webhooks, functions and realtime, and notifies the organization's members by email and in the console.",
+                "responses": {
+                    "201": {
+                        "description": "Monitor",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/monitor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": null,
+                    "demo": "monitors\/create-http-monitor.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "monitors.write",
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "monitorId": {
+                                        "description": "Monitor ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.",
+                                        "type": "string",
+                                        "example": "<MONITOR_ID>"
+                                    },
+                                    "name": {
+                                        "description": "Monitor name. Max length: 128 chars.",
+                                        "type": "string",
+                                        "example": "<NAME>"
+                                    },
+                                    "url": {
+                                        "description": "URL to request, with an `http` or `https` scheme.",
+                                        "type": "string",
+                                        "example": "https:\/\/api.example.com\/health",
+                                        "format": "url"
+                                    },
+                                    "method": {
+                                        "description": "HTTP method to request the URL with: `GET`, `HEAD`, `POST`, `PUT`, `PATCH`, `DELETE` or `OPTIONS`. Defaults to `GET`.",
+                                        "type": "string",
+                                        "default": "GET",
+                                        "example": "GET",
+                                        "title": "MonitorMethod",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "GET"
+                                                ],
+                                                "title": "GET"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "HEAD"
+                                                ],
+                                                "title": "HEAD"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "POST"
+                                                ],
+                                                "title": "POST"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "PUT"
+                                                ],
+                                                "title": "PUT"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "PATCH"
+                                                ],
+                                                "title": "PATCH"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "DELETE"
+                                                ],
+                                                "title": "DELETE"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "OPTIONS"
+                                                ],
+                                                "title": "OPTIONS"
+                                            }
+                                        ]
+                                    },
+                                    "headers": {
+                                        "description": "HTTP headers to send, as an object of header names and values. Each name must be a valid HTTP header name.",
+                                        "type": "object",
+                                        "default": {},
+                                        "example": {
+                                            "Authorization": "Bearer <TOKEN>"
+                                        }
+                                    },
+                                    "body": {
+                                        "description": "Request body to send. Max length: 16384 chars.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "<BODY>"
+                                    },
+                                    "rules": {
+                                        "description": "Rules that describe the failing state, as query strings generated with the Query class. The monitor fires when they match. Transport failures, such as timeouts, DNS failures, refused connections and denied targets, always fire. Variables: `statusCode` (HTTP status), `latency` (milliseconds the check took), `certificateDays` (whole days until the certificate expires), `certificateLifetime` (percent of the certificate's lifetime left). Operators: `equal`, `notEqual`, `lessThan`, `lessThanEqual`, `greaterThan`, `greaterThanEqual`, `between`, `notBetween`. Combine rules with `or` and `and`; top-level rules must all match. Without rules it fires on a status code outside 200 to 299, or on a certificate with fewer than 14 days and less than 25% of its lifetime left.",
+                                        "type": "array",
+                                        "default": [],
+                                        "example": [
+                                            "{\"method\":\"or\",\"values\":[{\"method\":\"notBetween\",\"attribute\":\"statusCode\",\"values\":[200,299]},{\"method\":\"greaterThan\",\"attribute\":\"latency\",\"values\":[2000]}]}"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "interval": {
+                                        "description": "Seconds between two checks, between 1 and 2592000. The scheduler runs on a one second tick, so one second is the shortest interval. Defaults to 60, or to the shortest interval your plan allows when that is longer. Reads back raised to your plan's minimum interval when the plan no longer allows it.",
+                                        "type": "integer",
+                                        "example": 60,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "timeout": {
+                                        "description": "Seconds a check may take before it fails, between 1 and 60, and no longer than the interval.",
+                                        "type": "integer",
+                                        "default": 10,
+                                        "example": 10,
+                                        "format": "int32"
+                                    },
+                                    "cooldown": {
+                                        "description": "Minimum seconds between two team notifications of this monitor firing, between 300 and 2592000. Events fire on every change between firing and resolved regardless.",
+                                        "type": "integer",
+                                        "default": 3600,
+                                        "example": 300,
+                                        "format": "int32"
+                                    },
+                                    "enabled": {
+                                        "description": "Set to false to create the monitor without checking it.",
+                                        "type": "boolean",
+                                        "default": true,
+                                        "example": true
+                                    },
+                                    "notify": {
+                                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Defaults to owners; pass an empty list to rely on the alert events alone.",
+                                        "type": "array",
+                                        "default": [
+                                            "owner"
+                                        ],
+                                        "example": [
+                                            "owner"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "severity": {
+                                        "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it, such as a push that rings through silent mode.",
+                                        "type": "string",
+                                        "default": "warning",
+                                        "example": "info",
+                                        "title": "MonitorSeverity",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "info"
+                                                ],
+                                                "title": "info"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "warning"
+                                                ],
+                                                "title": "warning"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "error"
+                                                ],
+                                                "title": "error"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "critical"
+                                                ],
+                                                "title": "critical"
+                                            }
+                                        ]
+                                    },
+                                    "escalationId": {
+                                        "description": "ID of an escalation of the organization that notifies the team of this monitor's alerts step by step, until a member acknowledges the alert or it resolves. When set, `notify` is not used. Leave empty to notify the `notify` roles once.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "<ESCALATION_ID>"
+                                    }
+                                },
+                                "required": [
+                                    "monitorId",
+                                    "name",
+                                    "url"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/monitors\/http\/{monitorId}": {
+            "patch": {
+                "summary": "Update HTTP monitor",
+                "operationId": "monitorsUpdateHttpMonitor",
+                "tags": [
+                    "monitors"
+                ],
+                "description": "Update an HTTP monitor by its unique ID. Only the parameters passed change; the monitor's state, its last check and its open alert are kept. Passing `rules` replaces all of them.",
+                "responses": {
+                    "200": {
+                        "description": "Monitor",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/monitor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": null,
+                    "demo": "monitors\/update-http-monitor.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "monitors.write",
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "monitorId",
+                        "description": "Monitor ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<MONITOR_ID>"
+                        },
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "Monitor name. Max length: 128 chars.",
+                                        "type": "string",
+                                        "example": "<NAME>",
+                                        "nullable": true
+                                    },
+                                    "url": {
+                                        "description": "URL to request, with an `http` or `https` scheme.",
+                                        "type": "string",
+                                        "example": "https:\/\/api.example.com\/health",
+                                        "format": "url",
+                                        "nullable": true
+                                    },
+                                    "method": {
+                                        "description": "HTTP method to request the URL with: `GET`, `HEAD`, `POST`, `PUT`, `PATCH`, `DELETE` or `OPTIONS`.",
+                                        "type": "string",
+                                        "example": "GET",
+                                        "title": "MonitorMethod",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "GET"
+                                                ],
+                                                "title": "GET"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "HEAD"
+                                                ],
+                                                "title": "HEAD"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "POST"
+                                                ],
+                                                "title": "POST"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "PUT"
+                                                ],
+                                                "title": "PUT"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "PATCH"
+                                                ],
+                                                "title": "PATCH"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "DELETE"
+                                                ],
+                                                "title": "DELETE"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "OPTIONS"
+                                                ],
+                                                "title": "OPTIONS"
+                                            }
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "headers": {
+                                        "description": "HTTP headers to send, as an object of header names and values. Each name must be a valid HTTP header name.",
+                                        "type": "object",
+                                        "default": {},
+                                        "example": {
+                                            "Authorization": "Bearer <TOKEN>"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "body": {
+                                        "description": "Request body to send. Max length: 16384 chars.",
+                                        "type": "string",
+                                        "example": "<BODY>",
+                                        "nullable": true
+                                    },
+                                    "rules": {
+                                        "description": "Rules that describe the failing state, as query strings generated with the Query class. The monitor fires when they match. Transport failures, such as timeouts, DNS failures, refused connections and denied targets, always fire. Variables: `statusCode` (HTTP status), `latency` (milliseconds the check took), `certificateDays` (whole days until the certificate expires), `certificateLifetime` (percent of the certificate's lifetime left). Operators: `equal`, `notEqual`, `lessThan`, `lessThanEqual`, `greaterThan`, `greaterThanEqual`, `between`, `notBetween`. Combine rules with `or` and `and`; top-level rules must all match. Without rules it fires on a status code outside 200 to 299, or on a certificate with fewer than 14 days and less than 25% of its lifetime left. Replaces the current rules; an empty list restores the defaults.",
+                                        "type": "array",
+                                        "example": [
+                                            "{\"method\":\"or\",\"values\":[{\"method\":\"notBetween\",\"attribute\":\"statusCode\",\"values\":[200,299]},{\"method\":\"greaterThan\",\"attribute\":\"latency\",\"values\":[2000]}]}"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "interval": {
+                                        "description": "Seconds between two checks, between 1 and 2592000. The scheduler runs on a one second tick, so one second is the shortest interval. Reads back raised to your plan's minimum interval when the plan no longer allows it.",
+                                        "type": "integer",
+                                        "example": 60,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "timeout": {
+                                        "description": "Seconds a check may take before it fails, between 1 and 60, and no longer than the interval.",
+                                        "type": "integer",
+                                        "example": 10,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "cooldown": {
+                                        "description": "Minimum seconds between two team notifications of this monitor firing, between 300 and 2592000. Events fire on every change between firing and resolved regardless.",
+                                        "type": "integer",
+                                        "example": 300,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "enabled": {
+                                        "description": "Whether the monitor is checked.",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "notify": {
+                                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Pass an empty list to rely on the alert events alone.",
+                                        "type": "array",
+                                        "example": [
+                                            "owner"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "severity": {
+                                        "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it, such as a push that rings through silent mode.",
+                                        "type": "string",
+                                        "example": "info",
+                                        "title": "MonitorSeverity",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "info"
+                                                ],
+                                                "title": "info"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "warning"
+                                                ],
+                                                "title": "warning"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "error"
+                                                ],
+                                                "title": "error"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "critical"
+                                                ],
+                                                "title": "critical"
+                                            }
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "escalationId": {
+                                        "description": "ID of an escalation of the organization that notifies the team of this monitor's alerts step by step, until a member acknowledges the alert or it resolves. When set, `notify` is not used. Pass an empty string to go back to the `notify` roles.",
+                                        "type": "string",
+                                        "example": "<ESCALATION_ID>",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/monitors\/smtp": {
+            "post": {
+                "summary": "Create SMTP monitor",
+                "operationId": "monitorsCreateSmtpMonitor",
+                "tags": [
+                    "monitors"
+                ],
+                "description": "Create an SMTP monitor. It reads a mail server's greeting, sends `EHLO` and, as its TLS mode asks, upgrades with `STARTTLS` or speaks TLS from the start, on its own interval. It opens an alert when the server cannot be reached, refuses the session or fails the TLS handshake, or when its rules match. It never authenticates or sends mail. Each alert fires the `monitors.[monitorId].alerts.[alertId].create` event when it opens and `.update` when a check passes again, for project webhooks, functions and realtime, and notifies the organization's members by email and in the console.",
+                "responses": {
+                    "201": {
+                        "description": "Monitor",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/monitor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": null,
+                    "demo": "monitors\/create-smtp-monitor.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "monitors.write",
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "monitorId": {
+                                        "description": "Monitor ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.",
+                                        "type": "string",
+                                        "example": "<MONITOR_ID>"
+                                    },
+                                    "name": {
+                                        "description": "Monitor name. Max length: 128 chars.",
+                                        "type": "string",
+                                        "example": "<NAME>"
+                                    },
+                                    "host": {
+                                        "description": "Hostname or IP address of the mail server.",
+                                        "type": "string",
+                                        "example": "smtp.example.com"
+                                    },
+                                    "port": {
+                                        "description": "Port to connect to, such as 25, 465 or 587.",
+                                        "type": "integer",
+                                        "example": 587,
+                                        "format": "int32"
+                                    },
+                                    "tlsMode": {
+                                        "description": "TLS mode: `auto` (`implicit` on port 465, `starttls` on 587 and `none` otherwise), `none`, `starttls` (upgrade after the greeting, and fail when the server does not offer it) or `implicit` (TLS from the first byte). Defaults to `auto`.",
+                                        "type": "string",
+                                        "default": "auto",
+                                        "example": "none",
+                                        "title": "MonitorTlsMode",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "none"
+                                                ],
+                                                "title": "none"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "starttls"
+                                                ],
+                                                "title": "starttls"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "implicit"
+                                                ],
+                                                "title": "implicit"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "auto"
+                                                ],
+                                                "title": "auto"
+                                            }
+                                        ]
+                                    },
+                                    "rules": {
+                                        "description": "Rules that describe the failing state, as query strings generated with the Query class. The monitor fires when they match. Transport failures, such as timeouts, DNS failures, refused connections and denied targets, always fire. Variables: `code` (SMTP reply code), `latency` (milliseconds the check took), `certificateDays` (whole days until the certificate expires), `certificateLifetime` (percent of the certificate's lifetime left). Operators: `equal`, `notEqual`, `lessThan`, `lessThanEqual`, `greaterThan`, `greaterThanEqual`, `between`, `notBetween`. Combine rules with `or` and `and`; top-level rules must all match. Without rules it fires on transport failures only.",
+                                        "type": "array",
+                                        "default": [],
+                                        "example": [
+                                            "{\"method\":\"or\",\"values\":[{\"method\":\"lessThan\",\"attribute\":\"certificateDays\",\"values\":[14]},{\"method\":\"greaterThan\",\"attribute\":\"latency\",\"values\":[2000]}]}"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "interval": {
+                                        "description": "Seconds between two checks, between 1 and 2592000. The scheduler runs on a one second tick, so one second is the shortest interval. Defaults to 60, or to the shortest interval your plan allows when that is longer. Reads back raised to your plan's minimum interval when the plan no longer allows it.",
+                                        "type": "integer",
+                                        "example": 60,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "timeout": {
+                                        "description": "Seconds a check may take before it fails, between 1 and 60, and no longer than the interval.",
+                                        "type": "integer",
+                                        "default": 10,
+                                        "example": 10,
+                                        "format": "int32"
+                                    },
+                                    "cooldown": {
+                                        "description": "Minimum seconds between two team notifications of this monitor firing, between 300 and 2592000. Events fire on every change between firing and resolved regardless.",
+                                        "type": "integer",
+                                        "default": 3600,
+                                        "example": 300,
+                                        "format": "int32"
+                                    },
+                                    "enabled": {
+                                        "description": "Set to false to create the monitor without checking it.",
+                                        "type": "boolean",
+                                        "default": true,
+                                        "example": true
+                                    },
+                                    "notify": {
+                                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Defaults to owners; pass an empty list to rely on the alert events alone.",
+                                        "type": "array",
+                                        "default": [
+                                            "owner"
+                                        ],
+                                        "example": [
+                                            "owner"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "severity": {
+                                        "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it, such as a push that rings through silent mode.",
+                                        "type": "string",
+                                        "default": "warning",
+                                        "example": "info",
+                                        "title": "MonitorSeverity",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "info"
+                                                ],
+                                                "title": "info"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "warning"
+                                                ],
+                                                "title": "warning"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "error"
+                                                ],
+                                                "title": "error"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "critical"
+                                                ],
+                                                "title": "critical"
+                                            }
+                                        ]
+                                    },
+                                    "escalationId": {
+                                        "description": "ID of an escalation of the organization that notifies the team of this monitor's alerts step by step, until a member acknowledges the alert or it resolves. When set, `notify` is not used. Leave empty to notify the `notify` roles once.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "<ESCALATION_ID>"
+                                    }
+                                },
+                                "required": [
+                                    "monitorId",
+                                    "name",
+                                    "host",
+                                    "port"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/monitors\/smtp\/{monitorId}": {
+            "patch": {
+                "summary": "Update SMTP monitor",
+                "operationId": "monitorsUpdateSmtpMonitor",
+                "tags": [
+                    "monitors"
+                ],
+                "description": "Update an SMTP monitor by its unique ID. Only the parameters passed change; the monitor's state, its last check and its open alert are kept. Passing `rules` replaces all of them.",
+                "responses": {
+                    "200": {
+                        "description": "Monitor",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/monitor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": null,
+                    "demo": "monitors\/update-smtp-monitor.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "monitors.write",
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "monitorId",
+                        "description": "Monitor ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<MONITOR_ID>"
+                        },
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "Monitor name. Max length: 128 chars.",
+                                        "type": "string",
+                                        "example": "<NAME>",
+                                        "nullable": true
+                                    },
+                                    "host": {
+                                        "description": "Hostname or IP address of the mail server.",
+                                        "type": "string",
+                                        "example": "smtp.example.com",
+                                        "nullable": true
+                                    },
+                                    "port": {
+                                        "description": "Port to connect to, such as 25, 465 or 587.",
+                                        "type": "integer",
+                                        "example": 587,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "tlsMode": {
+                                        "description": "TLS mode: `auto` (`implicit` on port 465, `starttls` on 587 and `none` otherwise), `none`, `starttls` (upgrade after the greeting, and fail when the server does not offer it) or `implicit` (TLS from the first byte).",
+                                        "type": "string",
+                                        "example": "none",
+                                        "title": "MonitorTlsMode",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "none"
+                                                ],
+                                                "title": "none"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "starttls"
+                                                ],
+                                                "title": "starttls"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "implicit"
+                                                ],
+                                                "title": "implicit"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "auto"
+                                                ],
+                                                "title": "auto"
+                                            }
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "rules": {
+                                        "description": "Rules that describe the failing state, as query strings generated with the Query class. The monitor fires when they match. Transport failures, such as timeouts, DNS failures, refused connections and denied targets, always fire. Variables: `code` (SMTP reply code), `latency` (milliseconds the check took), `certificateDays` (whole days until the certificate expires), `certificateLifetime` (percent of the certificate's lifetime left). Operators: `equal`, `notEqual`, `lessThan`, `lessThanEqual`, `greaterThan`, `greaterThanEqual`, `between`, `notBetween`. Combine rules with `or` and `and`; top-level rules must all match. Without rules it fires on transport failures only. Replaces the current rules; an empty list removes them.",
+                                        "type": "array",
+                                        "example": [
+                                            "{\"method\":\"or\",\"values\":[{\"method\":\"lessThan\",\"attribute\":\"certificateDays\",\"values\":[14]},{\"method\":\"greaterThan\",\"attribute\":\"latency\",\"values\":[2000]}]}"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "interval": {
+                                        "description": "Seconds between two checks, between 1 and 2592000. The scheduler runs on a one second tick, so one second is the shortest interval. Reads back raised to your plan's minimum interval when the plan no longer allows it.",
+                                        "type": "integer",
+                                        "example": 60,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "timeout": {
+                                        "description": "Seconds a check may take before it fails, between 1 and 60, and no longer than the interval.",
+                                        "type": "integer",
+                                        "example": 10,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "cooldown": {
+                                        "description": "Minimum seconds between two team notifications of this monitor firing, between 300 and 2592000. Events fire on every change between firing and resolved regardless.",
+                                        "type": "integer",
+                                        "example": 300,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "enabled": {
+                                        "description": "Whether the monitor is checked.",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "notify": {
+                                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Pass an empty list to rely on the alert events alone.",
+                                        "type": "array",
+                                        "example": [
+                                            "owner"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "severity": {
+                                        "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it, such as a push that rings through silent mode.",
+                                        "type": "string",
+                                        "example": "info",
+                                        "title": "MonitorSeverity",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "info"
+                                                ],
+                                                "title": "info"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "warning"
+                                                ],
+                                                "title": "warning"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "error"
+                                                ],
+                                                "title": "error"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "critical"
+                                                ],
+                                                "title": "critical"
+                                            }
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "escalationId": {
+                                        "description": "ID of an escalation of the organization that notifies the team of this monitor's alerts step by step, until a member acknowledges the alert or it resolves. When set, `notify` is not used. Pass an empty string to go back to the `notify` roles.",
+                                        "type": "string",
+                                        "example": "<ESCALATION_ID>",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/monitors\/tcp": {
+            "post": {
+                "summary": "Create TCP monitor",
+                "operationId": "monitorsCreateTcpMonitor",
+                "tags": [
+                    "monitors"
+                ],
+                "description": "Create a TCP monitor. It opens a connection to a host and port on its own interval and closes it at once, and opens an alert when the connection cannot be made, or when its rules match. Each alert fires the `monitors.[monitorId].alerts.[alertId].create` event when it opens and `.update` when a check passes again, for project webhooks, functions and realtime, and notifies the organization's members by email and in the console.",
+                "responses": {
+                    "201": {
+                        "description": "Monitor",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/monitor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": null,
+                    "demo": "monitors\/create-tcp-monitor.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "monitors.write",
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "monitorId": {
+                                        "description": "Monitor ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.",
+                                        "type": "string",
+                                        "example": "<MONITOR_ID>"
+                                    },
+                                    "name": {
+                                        "description": "Monitor name. Max length: 128 chars.",
+                                        "type": "string",
+                                        "example": "<NAME>"
+                                    },
+                                    "host": {
+                                        "description": "Hostname or IP address to connect to.",
+                                        "type": "string",
+                                        "example": "db.example.com"
+                                    },
+                                    "port": {
+                                        "description": "Port to connect to.",
+                                        "type": "integer",
+                                        "example": 5432,
+                                        "format": "int32"
+                                    },
+                                    "rules": {
+                                        "description": "Rules that describe the failing state, as query strings generated with the Query class. The monitor fires when they match. Transport failures, such as timeouts, DNS failures, refused connections and denied targets, always fire. Variables: `latency` (milliseconds the check took). Operators: `equal`, `notEqual`, `lessThan`, `lessThanEqual`, `greaterThan`, `greaterThanEqual`, `between`, `notBetween`. Combine rules with `or` and `and`; top-level rules must all match. Without rules it fires on transport failures only.",
+                                        "type": "array",
+                                        "default": [],
+                                        "example": [
+                                            "{\"method\":\"greaterThan\",\"attribute\":\"latency\",\"values\":[1000]}"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "interval": {
+                                        "description": "Seconds between two checks, between 1 and 2592000. The scheduler runs on a one second tick, so one second is the shortest interval. Defaults to 60, or to the shortest interval your plan allows when that is longer. Reads back raised to your plan's minimum interval when the plan no longer allows it.",
+                                        "type": "integer",
+                                        "example": 60,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "timeout": {
+                                        "description": "Seconds a check may take before it fails, between 1 and 60, and no longer than the interval.",
+                                        "type": "integer",
+                                        "default": 10,
+                                        "example": 10,
+                                        "format": "int32"
+                                    },
+                                    "cooldown": {
+                                        "description": "Minimum seconds between two team notifications of this monitor firing, between 300 and 2592000. Events fire on every change between firing and resolved regardless.",
+                                        "type": "integer",
+                                        "default": 3600,
+                                        "example": 300,
+                                        "format": "int32"
+                                    },
+                                    "enabled": {
+                                        "description": "Set to false to create the monitor without checking it.",
+                                        "type": "boolean",
+                                        "default": true,
+                                        "example": true
+                                    },
+                                    "notify": {
+                                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Defaults to owners; pass an empty list to rely on the alert events alone.",
+                                        "type": "array",
+                                        "default": [
+                                            "owner"
+                                        ],
+                                        "example": [
+                                            "owner"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "severity": {
+                                        "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it, such as a push that rings through silent mode.",
+                                        "type": "string",
+                                        "default": "warning",
+                                        "example": "info",
+                                        "title": "MonitorSeverity",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "info"
+                                                ],
+                                                "title": "info"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "warning"
+                                                ],
+                                                "title": "warning"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "error"
+                                                ],
+                                                "title": "error"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "critical"
+                                                ],
+                                                "title": "critical"
+                                            }
+                                        ]
+                                    },
+                                    "escalationId": {
+                                        "description": "ID of an escalation of the organization that notifies the team of this monitor's alerts step by step, until a member acknowledges the alert or it resolves. When set, `notify` is not used. Leave empty to notify the `notify` roles once.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "<ESCALATION_ID>"
+                                    }
+                                },
+                                "required": [
+                                    "monitorId",
+                                    "name",
+                                    "host",
+                                    "port"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/monitors\/tcp\/{monitorId}": {
+            "patch": {
+                "summary": "Update TCP monitor",
+                "operationId": "monitorsUpdateTcpMonitor",
+                "tags": [
+                    "monitors"
+                ],
+                "description": "Update a TCP monitor by its unique ID. Only the parameters passed change; the monitor's state, its last check and its open alert are kept. Passing `rules` replaces all of them.",
+                "responses": {
+                    "200": {
+                        "description": "Monitor",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/monitor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": null,
+                    "demo": "monitors\/update-tcp-monitor.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "monitors.write",
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "monitorId",
+                        "description": "Monitor ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<MONITOR_ID>"
+                        },
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "Monitor name. Max length: 128 chars.",
+                                        "type": "string",
+                                        "example": "<NAME>",
+                                        "nullable": true
+                                    },
+                                    "host": {
+                                        "description": "Hostname or IP address to connect to.",
+                                        "type": "string",
+                                        "example": "db.example.com",
+                                        "nullable": true
+                                    },
+                                    "port": {
+                                        "description": "Port to connect to.",
+                                        "type": "integer",
+                                        "example": 5432,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "rules": {
+                                        "description": "Rules that describe the failing state, as query strings generated with the Query class. The monitor fires when they match. Transport failures, such as timeouts, DNS failures, refused connections and denied targets, always fire. Variables: `latency` (milliseconds the check took). Operators: `equal`, `notEqual`, `lessThan`, `lessThanEqual`, `greaterThan`, `greaterThanEqual`, `between`, `notBetween`. Combine rules with `or` and `and`; top-level rules must all match. Without rules it fires on transport failures only. Replaces the current rules; an empty list removes them.",
+                                        "type": "array",
+                                        "example": [
+                                            "{\"method\":\"greaterThan\",\"attribute\":\"latency\",\"values\":[1000]}"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "interval": {
+                                        "description": "Seconds between two checks, between 1 and 2592000. The scheduler runs on a one second tick, so one second is the shortest interval. Reads back raised to your plan's minimum interval when the plan no longer allows it.",
+                                        "type": "integer",
+                                        "example": 60,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "timeout": {
+                                        "description": "Seconds a check may take before it fails, between 1 and 60, and no longer than the interval.",
+                                        "type": "integer",
+                                        "example": 10,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "cooldown": {
+                                        "description": "Minimum seconds between two team notifications of this monitor firing, between 300 and 2592000. Events fire on every change between firing and resolved regardless.",
+                                        "type": "integer",
+                                        "example": 300,
+                                        "format": "int32",
+                                        "nullable": true
+                                    },
+                                    "enabled": {
+                                        "description": "Whether the monitor is checked.",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "notify": {
+                                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Each must be an organization role, such as `owner` or `developer`. Pass an empty list to rely on the alert events alone.",
+                                        "type": "array",
+                                        "example": [
+                                            "owner"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "severity": {
+                                        "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it, such as a push that rings through silent mode.",
+                                        "type": "string",
+                                        "example": "info",
+                                        "title": "MonitorSeverity",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "info"
+                                                ],
+                                                "title": "info"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "warning"
+                                                ],
+                                                "title": "warning"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "error"
+                                                ],
+                                                "title": "error"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "critical"
+                                                ],
+                                                "title": "critical"
+                                            }
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "escalationId": {
+                                        "description": "ID of an escalation of the organization that notifies the team of this monitor's alerts step by step, until a member acknowledges the alert or it resolves. When set, `notify` is not used. Pass an empty string to go back to the `notify` roles.",
+                                        "type": "string",
+                                        "example": "<ESCALATION_ID>",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/organization\/escalations": {
+            "get": {
+                "summary": "List escalations",
+                "operationId": "organizationListEscalations",
+                "tags": [
+                    "organization"
+                ],
+                "description": "Get a list of your organization's escalations. Use `Query.search('search', term)` to search escalation IDs and names.",
+                "responses": {
+                    "200": {
+                        "description": "Escalations List",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/escalationList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "escalations",
+                    "demo": "organization\/list-escalations.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": [
+                        "escalations.read",
+                        "monitors.read"
+                    ],
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": [],
+                        "Organization": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "queries",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, repeat, search",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "total",
+                        "description": "When set to false, the total count returned will be 0 and will not be calculated.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                        },
+                        "in": "query"
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create escalation",
+                "operationId": "organizationCreateEscalation",
+                "tags": [
+                    "organization"
+                ],
+                "description": "Create an escalation for your organization. A monitor using it notifies the escalation's steps one after another while its alert fires, each by email, push and in the console, until a member acknowledges the alert or it resolves. Each step waits its `delay` in seconds, after the alert fires for the first step and after the previous step for the others, then notifies the members holding its `roles` and those named in `userIds`. With `repeat`, the steps run again from the first, a monitor's cooldown after the last step.",
+                "responses": {
+                    "201": {
+                        "description": "Escalation",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/escalation"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "escalations",
+                    "demo": "organization\/create-escalation.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": [
+                        "escalations.write",
+                        "monitors.write"
+                    ],
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": [],
+                        "Organization": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "escalationId": {
+                                        "description": "Escalation ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.",
+                                        "type": "string",
+                                        "example": "<ESCALATION_ID>"
+                                    },
+                                    "name": {
+                                        "description": "Escalation name. Max length: 128 chars.",
+                                        "type": "string",
+                                        "example": "<NAME>"
+                                    },
+                                    "steps": {
+                                        "description": "Steps notified in order while nobody acknowledges the alert. Each step is an object with `delay` (seconds to wait before the step, 0 to 2592000, default 0), `roles` (organization roles such as `owner` or `developer`) and `userIds` (organization members who accepted their invitation). A step names each role and member at most once and needs at least one of `roles` or `userIds`. Maximum of 100 steps.",
+                                        "type": "array",
+                                        "example": [
+                                            {
+                                                "delay": 0,
+                                                "roles": [
+                                                    "owner"
+                                                ]
+                                            },
+                                            {
+                                                "delay": 900,
+                                                "roles": [
+                                                    "developer"
+                                                ],
+                                                "userIds": [
+                                                    "<USER_ID>"
+                                                ]
+                                            }
+                                        ],
+                                        "items": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "repeat": {
+                                        "description": "How many more times the steps run from the first while nobody acknowledges the alert, between 0 and 9. Each round starts a monitor's cooldown after the last step.",
+                                        "type": "integer",
+                                        "default": 0,
+                                        "example": 1,
+                                        "format": "int32"
+                                    }
+                                },
+                                "required": [
+                                    "escalationId",
+                                    "name",
+                                    "steps"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/organization\/escalations\/{escalationId}": {
+            "get": {
+                "summary": "Get escalation",
+                "operationId": "organizationGetEscalation",
+                "tags": [
+                    "organization"
+                ],
+                "description": "Get one of your organization's escalations by its ID.",
+                "responses": {
+                    "200": {
+                        "description": "Escalation",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/escalation"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "escalations",
+                    "demo": "organization\/get-escalation.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": [
+                        "escalations.read",
+                        "monitors.read"
+                    ],
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": [],
+                        "Organization": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "escalationId",
+                        "description": "Escalation ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<ESCALATION_ID>"
+                        },
+                        "in": "path"
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "Update escalation",
+                "operationId": "organizationUpdateEscalation",
+                "tags": [
+                    "organization"
+                ],
+                "description": "Update an escalation's name, steps or repeats; what you leave out stays as it is. Alerts already escalating keep the steps they started with; the next alert uses the new ones.",
+                "responses": {
+                    "200": {
+                        "description": "Escalation",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/escalation"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "escalations",
+                    "demo": "organization\/update-escalation.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": [
+                        "escalations.write",
+                        "monitors.write"
+                    ],
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": [],
+                        "Organization": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "escalationId",
+                        "description": "Escalation ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<ESCALATION_ID>"
+                        },
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "Escalation name. Max length: 128 chars.",
+                                        "type": "string",
+                                        "example": "<NAME>",
+                                        "nullable": true
+                                    },
+                                    "steps": {
+                                        "description": "Steps notified in order while nobody acknowledges the alert. Each step is an object with `delay` (seconds to wait before the step, 0 to 2592000, default 0), `roles` (organization roles such as `owner` or `developer`) and `userIds` (organization members who accepted their invitation). A step names each role and member at most once and needs at least one of `roles` or `userIds`. Maximum of 100 steps.",
+                                        "type": "array",
+                                        "example": [
+                                            {
+                                                "delay": 0,
+                                                "roles": [
+                                                    "owner"
+                                                ]
+                                            },
+                                            {
+                                                "delay": 900,
+                                                "roles": [
+                                                    "developer"
+                                                ],
+                                                "userIds": [
+                                                    "<USER_ID>"
+                                                ]
+                                            }
+                                        ],
+                                        "items": {
+                                            "type": "object"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "repeat": {
+                                        "description": "How many more times the steps run from the first while nobody acknowledges the alert, between 0 and 9. Each round starts a monitor's cooldown after the last step.",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "format": "int32",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete escalation",
+                "operationId": "organizationDeleteEscalation",
+                "tags": [
+                    "organization"
+                ],
+                "description": "Delete an escalation. An escalation that a monitor uses cannot be deleted: move the monitor to another escalation or to `notify` roles first. Open alerts keep the steps they started with.",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "escalations",
+                    "demo": "organization\/delete-escalation.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": [
+                        "escalations.write",
+                        "monitors.write"
+                    ],
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": [],
+                        "Organization": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "escalationId",
+                        "description": "Escalation ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<ESCALATION_ID>"
+                        },
+                        "in": "path"
+                    }
+                ]
+            }
         }
     },
     "tags": [
@@ -146159,7 +148403,7 @@
                     },
                     "rules": {
                         "type": "array",
-                        "description": "Rules that must all hold for the monitor to fire, as query strings. A usage monitor has one comparing a metric with a threshold, optionally scoped with `equal('resourceType')` and `equal('resourceId')`.",
+                        "description": "Rules that must all hold for the monitor to fire, as query strings. A usage monitor has one comparing a metric with a threshold, optionally scoped with `equal('resourceType')` and `equal('resourceId')`. A probe monitor fires when its rules match the check, over these variables: `http` `statusCode`, `latency`, `certificateDays` and `certificateLifetime`; `dns` `answer`, `answers` and `latency`; `tcp` `latency`; `smtp` `code`, `latency`, `certificateDays` and `certificateLifetime`. A failed connection fires whatever the rules.",
                         "items": {
                             "type": "string"
                         },
@@ -146169,7 +148413,7 @@
                         "default": []
                     },
                     "type": {
-                        "description": "What the monitor checks: `usage` compares a usage metric with a threshold.",
+                        "description": "What the monitor checks: `usage` compares a usage metric with a threshold; `http`, `dns`, `tcp` and `smtp` probe a target on their own interval.",
                         "example": "usage",
                         "title": "MonitorType",
                         "type": "string",
@@ -146180,6 +148424,34 @@
                                     "usage"
                                 ],
                                 "title": "usage"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "http"
+                                ],
+                                "title": "http"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "dns"
+                                ],
+                                "title": "dns"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "tcp"
+                                ],
+                                "title": "tcp"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "smtp"
+                                ],
+                                "title": "smtp"
                             },
                             {
                                 "type": "string",
@@ -146277,7 +148549,7 @@
                     },
                     "notify": {
                         "type": "array",
-                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Empty when the alert events are the only delivery.",
+                        "description": "Organization roles whose confirmed members get an email and a console notification when the monitor fires and resolves. Empty when the alert events are the only delivery. Not used while `escalationId` is set.",
                         "items": {
                             "type": "string"
                         },
@@ -146287,6 +148559,12 @@
                         "default": [
                             "owner"
                         ]
+                    },
+                    "escalationId": {
+                        "type": "string",
+                        "description": "ID of the organization's escalation that notifies the team of this monitor's alerts, step by step until one is acknowledged. When set, `notify` is not used. Empty to notify the `notify` roles once.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
                     },
                     "severity": {
                         "description": "How urgent the monitor's alerts are: `info`, `warning`, `error` or `critical`. Critical alerts may be delivered with higher urgency by the notification channels that support it.",
@@ -146324,12 +148602,6 @@
                             }
                         ],
                         "default": "warning"
-                    },
-                    "critical": {
-                        "type": "boolean",
-                        "description": "Deprecated: use `severity`. Whether the monitor's severity is `critical`.",
-                        "example": false,
-                        "default": false
                     },
                     "status": {
                         "description": "Whether the monitor is firing, as of its last evaluation.",
@@ -146378,6 +148650,332 @@
                         "description": "Date the monitor last announced an alert, in ISO 8601 format.",
                         "example": "2020-10-15T06:38:00.000+00:00",
                         "nullable": true
+                    },
+                    "interval": {
+                        "type": "integer",
+                        "description": "Probe monitors: seconds between two checks, read back raised to the plan's minimum. 0 for usage monitors, which are evaluated on the server's interval.",
+                        "format": "int32",
+                        "example": 60,
+                        "default": 0
+                    },
+                    "timeout": {
+                        "type": "integer",
+                        "description": "Probe monitors: seconds a check may take before it fails.",
+                        "format": "int32",
+                        "example": 10,
+                        "default": 0
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "HTTP monitors: URL requested.",
+                        "example": "https:\/\/example.com\/health",
+                        "default": ""
+                    },
+                    "method": {
+                        "description": "HTTP monitors: method the URL is requested with. Null for other types.",
+                        "example": "GET",
+                        "title": "MonitorMethod",
+                        "type": "string",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "GET"
+                                ],
+                                "title": "GET"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "HEAD"
+                                ],
+                                "title": "HEAD"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "POST"
+                                ],
+                                "title": "POST"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "PUT"
+                                ],
+                                "title": "PUT"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "PATCH"
+                                ],
+                                "title": "PATCH"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "DELETE"
+                                ],
+                                "title": "DELETE"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "OPTIONS"
+                                ],
+                                "title": "OPTIONS"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "HTTP monitors: headers sent, as an object of header names and values.",
+                        "example": {
+                            "Accept": "application\/json"
+                        },
+                        "default": {}
+                    },
+                    "body": {
+                        "type": "string",
+                        "description": "HTTP monitors: request body sent.",
+                        "example": "",
+                        "default": ""
+                    },
+                    "domain": {
+                        "type": "string",
+                        "description": "DNS monitors: domain queried.",
+                        "example": "example.com",
+                        "default": ""
+                    },
+                    "record": {
+                        "description": "DNS monitors: record type queried. Null for other types.",
+                        "example": "A",
+                        "title": "MonitorRecord",
+                        "type": "string",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "A"
+                                ],
+                                "title": "A"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "AAAA"
+                                ],
+                                "title": "AAAA"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "CNAME"
+                                ],
+                                "title": "CNAME"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "MX"
+                                ],
+                                "title": "MX"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "TXT"
+                                ],
+                                "title": "TXT"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "NS"
+                                ],
+                                "title": "NS"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "resolver": {
+                        "type": "string",
+                        "description": "DNS monitors: resolver queried. Empty for the server's DNS resolver.",
+                        "example": "1.1.1.1",
+                        "default": ""
+                    },
+                    "host": {
+                        "type": "string",
+                        "description": "TCP and SMTP monitors: hostname or IP address connected to.",
+                        "example": "mail.example.com",
+                        "default": ""
+                    },
+                    "port": {
+                        "type": "integer",
+                        "description": "TCP and SMTP monitors: port connected to.",
+                        "format": "int32",
+                        "example": 587,
+                        "default": 0
+                    },
+                    "tlsMode": {
+                        "description": "SMTP monitors: how the connection is secured. `auto` picks implicit TLS on port 465, STARTTLS on 587 and none otherwise. Null for other types.",
+                        "example": "starttls",
+                        "title": "MonitorTlsMode",
+                        "type": "string",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "none"
+                                ],
+                                "title": "none"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "starttls"
+                                ],
+                                "title": "starttls"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "implicit"
+                                ],
+                                "title": "implicit"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "auto"
+                                ],
+                                "title": "auto"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "result": {
+                        "description": "Probe monitors: what the last check found. `ok` passes; anything else opened the monitor's alert. Null before the first check.",
+                        "example": "ok",
+                        "title": "MonitorResult",
+                        "type": "string",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "ok"
+                                ],
+                                "title": "ok"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "dns_failed"
+                                ],
+                                "title": "dns_failed"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "connect_refused"
+                                ],
+                                "title": "connect_refused"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "connect_timeout"
+                                ],
+                                "title": "connect_timeout"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "connect_failed"
+                                ],
+                                "title": "connect_failed"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "tls_failed"
+                                ],
+                                "title": "tls_failed"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "tls_expiring"
+                                ],
+                                "title": "tls_expiring"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "status_mismatch"
+                                ],
+                                "title": "status_mismatch"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "answer_mismatch"
+                                ],
+                                "title": "answer_mismatch"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "smtp_rejected"
+                                ],
+                                "title": "smtp_rejected"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "target_denied"
+                                ],
+                                "title": "target_denied"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "timeout"
+                                ],
+                                "title": "timeout"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "rule_matched"
+                                ],
+                                "title": "rule_matched"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "latency": {
+                        "type": "integer",
+                        "description": "Probe monitors: milliseconds the last check took.",
+                        "format": "int32",
+                        "example": 182,
+                        "nullable": true
+                    },
+                    "code": {
+                        "type": "integer",
+                        "description": "Probe monitors: last status code an HTTP target answered with, reply code an SMTP server sent, or response code a DNS resolver returned.",
+                        "format": "int32",
+                        "example": 200,
+                        "nullable": true
+                    },
+                    "certificateExpiresAt": {
+                        "type": "string",
+                        "description": "Probe monitors: expiry date of the TLS certificate the last check saw, in ISO 8601 format. Null without TLS.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "nullable": true
                     }
                 },
                 "required": [
@@ -146394,10 +148992,18 @@
                     "cooldown",
                     "enabled",
                     "notify",
+                    "escalationId",
                     "severity",
-                    "critical",
                     "status",
-                    "alertId"
+                    "alertId",
+                    "interval",
+                    "timeout",
+                    "url",
+                    "body",
+                    "domain",
+                    "resolver",
+                    "host",
+                    "port"
                 ],
                 "example": {
                     "$id": "5e5ea5c16897e",
@@ -146417,13 +149023,31 @@
                     "notify": [
                         "owner"
                     ],
+                    "escalationId": "5e5ea5c16897e",
                     "severity": "warning",
-                    "critical": false,
                     "status": "ok",
                     "value": 1250000,
                     "evaluatedAt": "2020-10-15T06:38:00.000+00:00",
                     "alertId": "5e5ea5c16897e",
-                    "triggeredAt": "2020-10-15T06:38:00.000+00:00"
+                    "triggeredAt": "2020-10-15T06:38:00.000+00:00",
+                    "interval": 60,
+                    "timeout": 10,
+                    "url": "https:\/\/example.com\/health",
+                    "method": "GET",
+                    "headers": {
+                        "Accept": "application\/json"
+                    },
+                    "body": "",
+                    "domain": "example.com",
+                    "record": "A",
+                    "resolver": "1.1.1.1",
+                    "host": "mail.example.com",
+                    "port": 587,
+                    "tlsMode": "starttls",
+                    "result": "ok",
+                    "latency": 182,
+                    "code": 200,
+                    "certificateExpiresAt": "2020-10-15T06:38:00.000+00:00"
                 }
             },
             "alert": {
@@ -146451,6 +149075,12 @@
                     "monitorId": {
                         "type": "string",
                         "description": "ID of the monitor that raised the alert.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "projectId": {
+                        "type": "string",
+                        "description": "ID of the project the alert is about. Empty for an alert of the whole organization.",
                         "example": "5e5ea5c16897e",
                         "default": ""
                     },
@@ -146507,6 +149137,32 @@
                         "example": "Jane Doe",
                         "default": ""
                     },
+                    "escalationId": {
+                        "type": "string",
+                        "description": "ID of the escalation notifying the team of this alert. Empty when the monitor notified its `notify` roles instead.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "escalationStep": {
+                        "type": "integer",
+                        "description": "Index of the escalation's next step to notify, counting from 0. Equal to the number of steps once the last round has gone out.",
+                        "format": "int32",
+                        "example": 1,
+                        "default": 0
+                    },
+                    "escalationRound": {
+                        "type": "integer",
+                        "description": "How many times the escalation's steps have been repeated for this alert.",
+                        "format": "int32",
+                        "example": 0,
+                        "default": 0
+                    },
+                    "escalatesAt": {
+                        "type": "string",
+                        "description": "When the next step is notified, in ISO 8601 format. Null when nothing is due: the alert was acknowledged or resolved, or every step has gone out.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "nullable": true
+                    },
                     "rules": {
                         "type": "array",
                         "description": "The monitor's rules when the alert fired, as query strings.",
@@ -146521,7 +149177,7 @@
                     "severity": {
                         "description": "The monitor's severity when the alert fired: `info`, `warning`, `error` or `critical`.",
                         "example": "warning",
-                        "title": "AlertSeverity",
+                        "title": "MonitorSeverity",
                         "type": "string",
                         "oneOf": [
                             {
@@ -146555,14 +149211,8 @@
                         ],
                         "default": "warning"
                     },
-                    "critical": {
-                        "type": "boolean",
-                        "description": "Deprecated: use `severity`. Whether the monitor was critical when the alert fired.",
-                        "example": false,
-                        "default": false
-                    },
                     "metric": {
-                        "description": "Metric the alert fired on.",
+                        "description": "Metric the alert fired on. Null for a probe monitor's alert.",
                         "example": "network.outbound",
                         "title": "AlertMetric",
                         "type": "string",
@@ -146759,15 +149409,29 @@
                             {
                                 "type": "string",
                                 "enum": [
+                                    "analytics.events"
+                                ],
+                                "title": "analytics.events"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "analytics.pageviews"
+                                ],
+                                "title": "analytics.pageviews"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
                                     "billing.budgetUsed"
                                 ],
                                 "title": "billing.budgetUsed"
                             }
                         ],
-                        "default": "network.requests"
+                        "nullable": true
                     },
                     "comparator": {
-                        "description": "How the metric was compared with the threshold.",
+                        "description": "How the metric was compared with the threshold. Null for a probe monitor's alert.",
                         "example": "greaterThan",
                         "title": "AlertComparator",
                         "type": "string",
@@ -146801,7 +149465,7 @@
                                 "title": "lessThanEqual"
                             }
                         ],
-                        "default": "greaterThan"
+                        "nullable": true
                     },
                     "threshold": {
                         "type": "number",
@@ -146812,7 +149476,7 @@
                     },
                     "value": {
                         "type": "number",
-                        "description": "Latest reading while the alert fired.",
+                        "description": "Latest reading while the alert fired: the metric's value for a usage monitor, and for a probe monitor its `latency`.",
                         "format": "double",
                         "example": 7250000,
                         "default": 0
@@ -146836,6 +149500,34 @@
                                     "usage"
                                 ],
                                 "title": "usage"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "http"
+                                ],
+                                "title": "http"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "dns"
+                                ],
+                                "title": "dns"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "tcp"
+                                ],
+                                "title": "tcp"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "smtp"
+                                ],
+                                "title": "smtp"
                             },
                             {
                                 "type": "string",
@@ -146917,6 +149609,113 @@
                         "format": "int32",
                         "example": 1,
                         "default": 0
+                    },
+                    "latency": {
+                        "type": "integer",
+                        "description": "Probe monitors: response time in milliseconds of the latest check recorded on the alert.",
+                        "format": "int32",
+                        "example": 182,
+                        "nullable": true
+                    },
+                    "result": {
+                        "description": "What the failing check of a probe monitor found when the alert opened, such as `connect_refused`. Null for a usage monitor's alert.",
+                        "example": "connect_refused",
+                        "title": "MonitorResult",
+                        "type": "string",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "ok"
+                                ],
+                                "title": "ok"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "dns_failed"
+                                ],
+                                "title": "dns_failed"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "connect_refused"
+                                ],
+                                "title": "connect_refused"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "connect_timeout"
+                                ],
+                                "title": "connect_timeout"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "connect_failed"
+                                ],
+                                "title": "connect_failed"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "tls_failed"
+                                ],
+                                "title": "tls_failed"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "tls_expiring"
+                                ],
+                                "title": "tls_expiring"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "status_mismatch"
+                                ],
+                                "title": "status_mismatch"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "answer_mismatch"
+                                ],
+                                "title": "answer_mismatch"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "smtp_rejected"
+                                ],
+                                "title": "smtp_rejected"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "target_denied"
+                                ],
+                                "title": "target_denied"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "timeout"
+                                ],
+                                "title": "timeout"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "rule_matched"
+                                ],
+                                "title": "rule_matched"
+                            }
+                        ],
+                        "nullable": true
                     }
                 },
                 "required": [
@@ -146924,15 +149723,16 @@
                     "$createdAt",
                     "$updatedAt",
                     "monitorId",
+                    "projectId",
                     "name",
                     "status",
                     "acknowledgedBy",
                     "acknowledgedByName",
+                    "escalationId",
+                    "escalationStep",
+                    "escalationRound",
                     "rules",
                     "severity",
-                    "critical",
-                    "metric",
-                    "comparator",
                     "threshold",
                     "value",
                     "peak",
@@ -146946,17 +149746,21 @@
                     "$createdAt": "2020-10-15T06:38:00.000+00:00",
                     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
                     "monitorId": "5e5ea5c16897e",
+                    "projectId": "5e5ea5c16897e",
                     "name": "Bandwidth spike",
                     "status": "firing",
                     "resolvedAt": "2020-10-15T06:38:00.000+00:00",
                     "acknowledgedAt": "2020-10-15T06:38:00.000+00:00",
                     "acknowledgedBy": "5e5ea5c16897e",
                     "acknowledgedByName": "Jane Doe",
+                    "escalationId": "5e5ea5c16897e",
+                    "escalationStep": 1,
+                    "escalationRound": 0,
+                    "escalatesAt": "2020-10-15T06:38:00.000+00:00",
                     "rules": [
                         "{\"method\":\"greaterThan\",\"attribute\":\"network.outbound\",\"values\":[5000000]}"
                     ],
                     "severity": "warning",
-                    "critical": false,
                     "metric": "network.outbound",
                     "comparator": "greaterThan",
                     "threshold": 5000000,
@@ -146965,7 +149769,9 @@
                     "type": "usage",
                     "resourceType": "database",
                     "resourceId": "5e5ea5c16897e",
-                    "notifications": 1
+                    "notifications": 1,
+                    "latency": 182,
+                    "result": "connect_refused"
                 }
             },
             "key": {
@@ -168487,6 +171293,145 @@
                 "example": {
                     "total": 5,
                     "keys": ""
+                }
+            },
+            "escalationList": {
+                "description": "Escalations List",
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer",
+                        "description": "Total number of escalations that matched your query.",
+                        "format": "int32",
+                        "example": 5,
+                        "default": 0
+                    },
+                    "escalations": {
+                        "type": "array",
+                        "description": "List of escalations.",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/escalation"
+                        },
+                        "example": []
+                    }
+                },
+                "required": [
+                    "total",
+                    "escalations"
+                ],
+                "example": {
+                    "total": 5,
+                    "escalations": ""
+                }
+            },
+            "escalationStep": {
+                "description": "Escalation Step",
+                "type": "object",
+                "properties": {
+                    "delay": {
+                        "type": "integer",
+                        "description": "Seconds to wait before notifying this step: after the alert fires for the first step, after the previous step for the others.",
+                        "format": "int32",
+                        "example": 600,
+                        "default": 0
+                    },
+                    "roles": {
+                        "type": "array",
+                        "description": "Organization roles whose confirmed members this step notifies.",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "developer"
+                        ],
+                        "default": []
+                    },
+                    "userIds": {
+                        "type": "array",
+                        "description": "IDs of the organization's members this step notifies, whatever their role.",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "5e5ea5c16897e"
+                        ],
+                        "default": []
+                    }
+                },
+                "required": [
+                    "delay",
+                    "roles",
+                    "userIds"
+                ],
+                "example": {
+                    "delay": 600,
+                    "roles": [
+                        "developer"
+                    ],
+                    "userIds": [
+                        "5e5ea5c16897e"
+                    ]
+                }
+            },
+            "escalation": {
+                "description": "Escalation",
+                "type": "object",
+                "properties": {
+                    "$id": {
+                        "type": "string",
+                        "description": "Escalation ID.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "$createdAt": {
+                        "type": "string",
+                        "description": "Escalation creation date in ISO 8601 format.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "$updatedAt": {
+                        "type": "string",
+                        "description": "Escalation update date in ISO 8601 format.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Escalation name.",
+                        "example": "Platform",
+                        "default": ""
+                    },
+                    "steps": {
+                        "type": "array",
+                        "description": "Who is notified of a firing alert, in order, until a member acknowledges it.",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/escalationStep"
+                        },
+                        "example": []
+                    },
+                    "repeat": {
+                        "type": "integer",
+                        "description": "How many more times the steps run from the first, a monitor's cooldown after the last step, while nobody has acknowledged the alert.",
+                        "format": "int32",
+                        "example": 2,
+                        "default": 0
+                    }
+                },
+                "required": [
+                    "$id",
+                    "$createdAt",
+                    "$updatedAt",
+                    "name",
+                    "steps",
+                    "repeat"
+                ],
+                "example": {
+                    "$id": "5e5ea5c16897e",
+                    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+                    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+                    "name": "Platform",
+                    "steps": [],
+                    "repeat": 2
                 }
             }
         },
