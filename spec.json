@@ -126549,6 +126549,7 @@
                     "public": true,
                     "auth": {
                         "Project": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 },
@@ -126564,6 +126565,7 @@
                         "Session": [],
                         "Key": [],
                         "JWT": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 ],
@@ -126622,6 +126624,7 @@
                     "public": true,
                     "auth": {
                         "Project": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 },
@@ -126637,6 +126640,7 @@
                         "Session": [],
                         "Key": [],
                         "JWT": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 ],
@@ -126695,6 +126699,7 @@
                     "public": true,
                     "auth": {
                         "Project": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 },
@@ -126710,6 +126715,7 @@
                         "Session": [],
                         "Key": [],
                         "JWT": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 ],
@@ -126768,6 +126774,7 @@
                     "public": true,
                     "auth": {
                         "Project": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 },
@@ -126783,6 +126790,7 @@
                         "Session": [],
                         "Key": [],
                         "JWT": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 ],
@@ -126841,6 +126849,7 @@
                     "public": true,
                     "auth": {
                         "Project": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 },
@@ -126856,6 +126865,7 @@
                         "Session": [],
                         "Key": [],
                         "JWT": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 ],
@@ -127281,6 +127291,7 @@
                     "public": true,
                     "auth": {
                         "Project": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 },
@@ -127296,6 +127307,7 @@
                         "Session": [],
                         "Key": [],
                         "JWT": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 ],
@@ -131695,6 +131707,7 @@
                     "public": true,
                     "auth": {
                         "Project": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 },
@@ -131710,6 +131723,7 @@
                         "Session": [],
                         "Key": [],
                         "JWT": [],
+                        "Environment": [],
                         "ImpersonateUserId": []
                     }
                 ],
