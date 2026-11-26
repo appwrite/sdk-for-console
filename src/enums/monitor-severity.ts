@@ -1,4 +1,4 @@
-export enum AlertSeverity {
+export enum MonitorSeverity {
     Info = 'info',
     Warning = 'warning',
     Error = 'error',

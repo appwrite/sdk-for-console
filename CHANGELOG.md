@@ -1,5 +1,17 @@
 # Change Log
 
+## 22.0.0
+
+* Breaking: `Alert.critical` and the `AlertSeverity` enum are removed; `Alert.severity` uses `MonitorSeverity`
+* Breaking: `Alert.metric` and `Alert.comparator` are null for a probe monitor's alert
+* Added: `monitors` service to create, list, get, update and delete HTTP, DNS, TCP, SMTP and usage monitors
+* Added: `alerts` service to list and get alerts, and acknowledge them with `alerts.update`
+* Added: `organization.listEscalations`, `createEscalation`, `getEscalation`, `updateEscalation` and `deleteEscalation`
+* Added: `organizations.listMonitors`, `getMonitor`, `listAlerts` and `getAlert`
+* Added: `projectId`, `escalationId`, `escalationStep`, `escalationRound`, `escalatesAt`, `latency` and `result` on `Alert`
+* Added: `Monitor`, `Escalation` and `EscalationStep` models, their list models, and the `Monitor*` enums
+* Added: `http`, `dns`, `tcp` and `smtp` on `MonitorType`, and analytics metrics on `AlertMetric`
+
 ## 21.2.0
 
 * Added: `account.createLDAPSession` for LDAP sign-in

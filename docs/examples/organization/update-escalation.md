@@ -1,0 +1,28 @@
+```javascript
+import { Client, Organization } from '@appwrite.io/console';
+
+const client = new Client()
+    .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
+    .setProject('<YOUR_PROJECT_ID>'); // Your project ID
+
+const organization = new Organization(client);
+
+const result = await organization.updateEscalation({
+    escalationId: '<ESCALATION_ID>',
+    name: '<NAME>', // optional
+    steps: [
+        {
+            delay: 0,
+            roles: ['owner'],
+        },
+        {
+            delay: 900,
+            roles: ['developer'],
+            userIds: ['<USER_ID>'],
+        },
+    ], // optional
+    repeat: 1, // optional
+});
+
+console.log(result);
+```
